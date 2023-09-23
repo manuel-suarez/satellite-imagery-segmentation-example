@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 dataset_root_folder = '/home/est_posgrado_manuel.suarez/data/'
 dataset_name = "DubaiDataset"
 minmaxscaler = MinMaxScaler();
-image_path_size = 256
+image_patch_size = 256
 # Load data
 image_dataset = []
 mask_dataset = []
