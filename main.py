@@ -244,3 +244,6 @@ tf.keras.backend.clear_session()
 # Model compiling
 model.compile(optimizer="adam", loss=total_loss, metrics=metrics)
 model.summary()
+
+# Training
+model_history = model.fit(X_train, y_train, batch_size=16, verbose=1, epochs=100, validation_data=(X_test, y_test), shuffle=False)
