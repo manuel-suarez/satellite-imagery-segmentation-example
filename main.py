@@ -129,3 +129,23 @@ plt.subplot(122)
 plt.imshow(labels[random_image_id][:,:,0])
 plt.savefig("figure02.png")
 plt.close()
+
+# Dataset split
+total_classes = len(np.unique(labels))
+from tensorflow.keras.utils import to_categorical
+labels_categorical_dataset = to_categorical(labels, num_classes=total_classes)
+master_training_dataset = image_dataset
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(master_training_dataset, labels_categorical_dataset, test_size=0.15, random_state=100)
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+image_height = X_train.shape[1]
+image_width = X_train.shape[2]
+image_channels = X_train.shape[3]
+total_classes = y_train.shape[3]
+print(image_height)
+print(image_width)
+print(image_channels)
+print(total_classes)
