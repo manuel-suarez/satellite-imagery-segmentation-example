@@ -55,3 +55,77 @@ image_dataset = np.array(image_dataset)
 mask_dataset = np.array(mask_dataset)
 print(len(image_dataset))
 print(len(mask_dataset))
+
+# Generating figure
+random_image_id = random.randint(0, len(image_dataset))
+plt.figure(figsize=(14,8))
+plt.subplot(121)
+plt.imshow(image_dataset[random_image_id])
+plt.subplot(122)
+plt.imshow(mask_dataset[random_image_id])
+plt.savefig("figure01.png")
+plt.close()
+# Configure labels
+class_building = '#3C1098'
+class_building = class_building.lstrip('#')
+class_building = np.array(tuple(int(class_building[i:i+2], 16) for i in (0,2,4)))
+print(class_building)
+
+class_land = '#8429F6'
+class_land = class_land.lstrip('#')
+class_land = np.array(tuple(int(class_land[i:i+2], 16) for i in (0,2,4)))
+print(class_land)
+
+class_road = '#6EC1E4'
+class_road = class_road.lstrip('#')
+class_road = np.array(tuple(int(class_road[i:i+2], 16) for i in (0,2,4)))
+print(class_road)
+
+class_vegetation = '#FEDD3A'
+class_vegetation = class_vegetation.lstrip('#')
+class_vegetation = np.array(tuple(int(class_vegetation[i:i+2], 16) for i in (0,2,4)))
+print(class_vegetation)
+
+class_water = '#E2A929'
+class_water = class_water.lstrip('#')
+class_water = np.array(tuple(int(class_water[i:i+2], 16) for i in (0,2,4)))
+print(class_water)
+
+class_unlabeled = '#9B9B9B'
+class_unlabeled = class_unlabeled.lstrip('#')
+class_unlabeled = np.array(tuple(int(class_unlabeled[i:i+2], 16) for i in (0,2,4)))
+print(class_unlabeled)
+
+label = individual_patched_mask
+def rgb_to_label(label):
+  label_segment = np.zeros(label.shape, dtype=np.uint8)
+  label_segment[np.all(label == class_water, axis=-1)] = 0
+  label_segment[np.all(label == class_land, axis=-1)] = 1
+  label_segment[np.all(label == class_road, axis=-1)] = 2
+  label_segment[np.all(label == class_building, axis=-1)] = 3
+  label_segment[np.all(label == class_vegetation, axis=-1)] = 4
+  label_segment[np.all(label == class_unlabeled, axis=-1)] = 5
+  #print(label_segment)
+  label_segment = label_segment[:,:,0]
+  #print(label_segment)
+  return label_segment
+
+labels = []
+for i in range(mask_dataset.shape[0]):
+  label = rgb_to_label(mask_dataset[i])
+  labels.append(label)
+labels = np.array(labels)
+labels = np.expand_dims(labels, axis=3)
+np.unique(labels)
+print("Total unique labels based on masks: ",format(np.unique(labels)))
+
+random_image_id = random.randint(0, len(image_dataset))
+
+plt.figure(figsize=(14,8))
+plt.subplot(121)
+plt.imshow(image_dataset[random_image_id])
+plt.subplot(122)
+#plt.imshow(mask_dataset[random_image_id])
+plt.imshow(labels[random_image_id][:,:,0])
+plt.savefig("figure02.png")
+plt.close()
