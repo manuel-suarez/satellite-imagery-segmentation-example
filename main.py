@@ -279,3 +279,27 @@ plt.show()
 plt.savefig("figure04.png")
 plt.close()
 
+# Results
+import random
+test_image_number = random.randint(0, len(X_test))
+
+test_image = X_test[test_image_number]
+ground_truth_image = y_test_argmax[test_image_number]
+
+test_image_input = np.expand_dims(test_image, 0)
+
+prediction = model.predict(test_image_input)
+predicted_image = np.argmax(prediction, axis=3)
+predicted_image = predicted_image[0,:,:]
+plt.figure(figsize=(14,8))
+plt.subplot(231)
+plt.title("Original Image")
+plt.imshow(test_image)
+plt.subplot(232)
+plt.title("Original Masked image")
+plt.imshow(ground_truth_image)
+plt.subplot(233)
+plt.title("Predicted Image")
+plt.imshow(predicted_image)
+plt.savefig("figure05.png")
+plt.close()
