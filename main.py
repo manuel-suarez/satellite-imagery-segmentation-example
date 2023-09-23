@@ -22,7 +22,7 @@ for image_type in ['images', 'masks']:
   elif image_type == 'masks':
     image_extension = 'png'
   for tile_id in range(1,8):
-    for image_id in range(1,20):
+    for image_id in range(1,10):
       image = cv2.imread(os.path.join(dataset_root_folder, dataset_name, f"Tile {tile_id}", f"{image_type}", f"image_part_00{image_id}.{image_extension}"), 1)
       if image is not None:
         if image_type == 'masks':
