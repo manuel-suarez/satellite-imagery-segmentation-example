@@ -247,3 +247,35 @@ model.summary()
 
 # Training
 model_history = model.fit(X_train, y_train, batch_size=16, verbose=1, epochs=100, validation_data=(X_test, y_test), shuffle=False)
+# History
+history_a = model_history
+
+# Plot loss
+loss = history_a.history['loss']
+val_loss = history_a.history['val_loss']
+epochs = range(1, len(loss) + 1)
+plt.plot(epochs, loss, 'y', label="Training Loss")
+plt.plot(epochs, val_loss, 'r', label="Validation Loss")
+plt.title("Training Vs Validation Loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.legend()
+plt.show()
+plt.savefig("figure03.png")
+plt.close()
+
+# Plot IoU
+jaccard_coef = history_a.history['jaccard_coef']
+val_jaccard_coef = history_a.history['val_jaccard_coef']
+
+epochs = range(1, len(jaccard_coef) + 1)
+plt.plot(epochs, jaccard_coef, 'y', label="Training IoU")
+plt.plot(epochs, val_jaccard_coef, 'r', label="Validation IoU")
+plt.title("Training Vs Validation IoU")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.legend()
+plt.show()
+plt.savefig("figure04.png")
+plt.close()
+
