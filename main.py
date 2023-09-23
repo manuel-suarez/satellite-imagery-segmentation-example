@@ -279,8 +279,14 @@ plt.show()
 plt.savefig("figure04.png")
 plt.close()
 
-# Results
+# Predictions
+y_pred = model.predict(X_test)
+y_pred_argmax = np.argmax(y_pred, axis=3)
+y_test_argmax = np.argmax(y_test, axis=3)
+
+# Comparison prediction results
 import random
+
 test_image_number = random.randint(0, len(X_test))
 
 test_image = X_test[test_image_number]
