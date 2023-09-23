@@ -228,3 +228,19 @@ def get_deep_learning_model():
                           image_channels=image_channels)
 model = get_deep_learning_model()
 model.get_config()
+
+# Loss and metrics
+weights = [0.1666, 0.1666, 0.1666, 0.1666, 0.1666, 0.1666]
+import os
+os.environ["SM_FRAMEWORK"] = "tf.keras"
+
+from tensorflow import keras
+import segmentation_models as sm
+dice_loss = sm.losses.DiceLoss(class_weights = weights)
+focal_loss = sm.losses.CategoricalFocalLoss()
+total_loss = dice_loss + (1 * focal_loss)
+import tensorflow as tf
+tf.keras.backend.clear_session()
+# Model compiling
+model.compile(optimizer="adam", loss=total_loss, metrics=metrics)
+model.summary()
