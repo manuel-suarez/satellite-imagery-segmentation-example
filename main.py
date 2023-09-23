@@ -303,3 +303,6 @@ plt.title("Predicted Image")
 plt.imshow(predicted_image)
 plt.savefig("figure05.png")
 plt.close()
+
+# Save weights
+model.save("satellite_segmentation_full.h5")
